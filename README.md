@@ -2,9 +2,13 @@
 
 一个基于Flutter的EPUB阅读器示例应用，支持EPUB文件加载、章节切换、样式设置等功能。
 
-## 功能特性
+| ![][1] | ![][2] | ![][3] |
+| ------ | ------ | ------ |
+| ![][4] | ![][5] |        |
 
-### 核心功能
+## 一 功能特性
+
+### 1.1 核心功能
 - ✅ EPUB文件加载与解压
 - ✅ 自动扫描并生成章节列表
 - ✅ 左右滑动切换章节
@@ -12,14 +16,14 @@
 - ✅ 样式设置（字体大小、背景色、文字颜色）
 - ✅ 样式在页面切换时保持一致
 
-### 技术特点
+### 1.2 技术特点
 - 使用Flutter框架开发，支持跨平台
 - 使用InAppWebView加载本地HTML文件
 - 支持EPUB文件的自动解压和解析
 - 响应式设计，适配不同屏幕尺寸
 - 流畅的手势操作体验
 
-## 项目结构
+## 二 项目结构
 
 ```
 flutter_epub_demo/
@@ -43,60 +47,58 @@ flutter_epub_demo/
 └── README.md                     # 项目说明文档
 ```
 
-## 快速上手
+## 三 快速上手
 
-### 环境要求
+### 3.1 环境要求
 - Flutter 3.0+
 - Dart 2.17+
 - Android SDK 21+ 或 iOS 11+
 
-### 安装与运行
+### 3.2 安装与运行
 
-1. **克隆项目**
-   ```bash
-   git clone https://github.com/yourusername/flutter_epub_demo.git
-   cd flutter_epub_demo
-   ```
+```
+1、克隆项目
+git clone https://github.com/yourusername/flutter_epub_demo.git
+cd flutter_epub_demo
 
-2. **安装依赖**
-   ```bash
-   flutter pub get
-   ```
+2、安装依赖
+flutter pub get
 
-3. **运行项目**
-   ```bash
-   flutter run
-   ```
+3、运行项目
+flutter run
+```
 
-### 使用指南
+### 3.3 使用指南
 
-1. **加载EPUB文件**
+```
+1. 加载EPUB文件
    - 点击应用首页的"加载EPUB"按钮
    - 选择本地的EPUB文件
 
-2. **阅读操作**
-   - **左右滑动**：切换章节
-   - **顶部左侧菜单按钮**：打开目录
-   - **顶部右侧设置按钮**：打开样式设置
+2. 阅读操作
+   - 左右滑动：切换章节
+   - 顶部左侧菜单按钮：打开目录
+   - 顶部右侧设置按钮：打开样式设置
 
-3. **样式设置**
+3. 样式设置
    - 调整字体大小
    - 选择背景颜色
    - 选择文字颜色
    - 点击"应用"按钮保存设置
 
-4. **目录操作**
+4. 目录操作
    - 点击目录项跳转到对应章节
    - 点击右上角关闭按钮关闭目录
+```
 
-## 技术实现细节
+## 四 技术实现细节
 
-### 1. EPUB文件解压与解析
+### 4.1 EPUB文件解压与解析
 
 EPUB文件本质上是一个ZIP压缩包，包含HTML、CSS、图片等资源文件。应用使用`archive`库解压EPUB文件，并扫描其中的HTML文件作为章节列表。
 
-**关键代码**：
-```dart
+```
+关键代码：
 // 解压EPUB文件
 final archive = ZipDecoder().decodeBytes(epubBytes);
 for (final file in archive) {
@@ -114,12 +116,12 @@ for (final file in archive) {
 }
 ```
 
-### 2. 章节管理
+### 4.2 章节管理
 
 应用会自动扫描解压后的EPUB文件，收集所有HTML文件作为章节列表，并在页面切换时保持样式一致。
 
-**关键代码**：
-```dart
+```
+关键代码：
 // 加载章节列表
 void _loadChapterList() {
   // 从当前章节路径中提取EPUB文件的根目录
@@ -142,12 +144,12 @@ void _loadChapterList() {
 }
 ```
 
-### 3. 手势操作与页面切换
+### 4.3 手势操作与页面切换
 
 使用Flutter的`GestureDetector`组件捕获左右滑动手势，实现章节切换功能。
 
-**关键代码**：
-```dart
+```
+关键代码：
 // 手势检测
 GestureDetector(
   onHorizontalDragEnd: (details) {
@@ -163,12 +165,12 @@ GestureDetector(
 )
 ```
 
-### 4. 样式设置
+### 4.4 样式设置
 
 通过JavaScript注入修改HTML页面的样式，包括字体大小、背景色和文字颜色。
 
-**关键代码**：
-```dart
+```
+关键代码：
 // 应用样式
 void _applyStyleToCurrentPage() {
   controller.evaluateJavascript(source: """
@@ -188,12 +190,12 @@ void _applyStyleToCurrentPage() {
 }
 ```
 
-### 5. 样式保持
+### 4.5 样式保持
 
 在页面加载完成后自动应用保存的样式，确保样式在页面切换时保持一致。
 
-**关键代码**：
-```dart
+```
+关键代码：
 // 页面加载完成后应用样式
 InAppWebView(
   initialUrlRequest: URLRequest(url: WebUri(Uri.file(widget.chapterPath).toString())),
@@ -205,24 +207,24 @@ InAppWebView(
 )
 ```
 
-## 常见问题与解决方案
+## 五 常见问题与解决方案
 
-### 1. EPUB文件加载失败
+### 5.1 EPUB文件加载失败
 
 **问题**：点击加载按钮后出现"Is a directory"错误。
 **解决方案**：确保EPUB文件格式正确，应用会自动处理目录和文件的创建。
 
-### 2. 样式设置不生效
+### 5.2 样式设置不生效
 
 **问题**：设置字体大小和背景颜色后，切换页面样式不保持。
 **解决方案**：应用已经实现了样式保持功能，会在页面加载完成后自动应用保存的样式。
 
-### 3. 目录不正确或跳转失败
+### 5.3 目录不正确或跳转失败
 
 **问题**：目录显示的是模拟数据，点击跳转后页面空白。
 **解决方案**：应用会自动扫描EPUB文件中的HTML文件生成章节列表，并支持正确的章节跳转。
 
-## 技术栈
+## 四 技术栈
 
 - **Flutter**：跨平台UI框架
 - **Dart**：编程语言
@@ -230,29 +232,22 @@ InAppWebView(
 - **archive**：解压EPUB文件
 - **path_provider**：获取本地存储路径
 
-## 项目未来展望
+## 五 项目未来展望
 
-- [ ] 支持更多EPUB格式特性（如CSS样式、多媒体内容）
-- [ ] 添加阅读进度保存与恢复功能
-- [ ] 实现夜间模式
-- [ ] 支持字体选择
-- [ ] 添加搜索功能
-- [ ] 优化性能与用户体验
+- 支持更多EPUB格式特性（如CSS样式、多媒体内容）
+- 添加阅读进度保存与恢复功能
+- 实现夜间模式
+- 支持字体选择
+- 添加搜索功能
+- 优化性能与用户体验
 
-## 贡献指南
 
-欢迎提交Issue和Pull Request来帮助改进这个项目！
+[1]:res/epub-flutter-1.png
+[2]:res/epub-flutter-2.png
+[3]:res/epub-flutter-3.png
+[4]:res/epub-flutter-4.png
+[5]:res/epub-flutter-5.png
+[6]:res/epub-flutter-6.png
 
-## 许可证
 
-本项目采用MIT许可证。详见LICENSE文件。
 
-## 致谢
-
-- 感谢Flutter团队提供的跨平台开发框架
-- 感谢所有为EPUB标准做出贡献的开发者
-- 感谢InAppWebView团队提供的WebView解决方案
-
----
-
-希望这个EPUB阅读器示例应用能够帮助你理解Flutter的开发流程和EPUB文件的处理方式。如果你有任何问题或建议，欢迎随时联系我们！
